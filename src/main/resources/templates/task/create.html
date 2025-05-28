@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f9f9f9;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            margin-top: -16px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Create Task</h1>
+    <form th:action="@{/tasks/create}" th:object="${task}" method="post">
+        <label for="title">Title</label>
+        <input type="text" th:field="*{title}" id="title" maxlength="128" required>
+
+        <label for="description">Description</label>
+        <textarea th:field="*{description}" id="description" maxlength="512" required></textarea>
+        <div class="char-counter" id="desc-counter">0 / 512</div>
+
+        <label for="status">Status</label>
+        <select th:field="*{status}" id="status" required>
+            <option value="" disabled selected>Choose status</option>
+            <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+        </select>
+
+        <button type="submit">Create Task</button>
+    </form>
+</div>
+
+<script>
+    const descriptionInput = document.getElementById('description');
+    const counter = document.getElementById('desc-counter');
+
+    descriptionInput.addEventListener('input', function () {
+        const length = descriptionInput.value.length;
+        counter.textContent = `${length} / 512`;
+    });
+</script>
+
+</body>
+</html>
