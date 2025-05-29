@@ -40,7 +40,7 @@ public class TaskService {
 
     public Task findById(Integer id){
         return taskRepository.findById(id)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "NotFound"));
     }
 
     public Task updateTask(Integer id, CreateUpdateTaskRequest request){

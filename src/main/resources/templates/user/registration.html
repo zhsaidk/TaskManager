@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Регистрация</h2>
+    <form id="signup-form" th:action="@{/register}" method="POST" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="firstName">Имя</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Введите имя" required minlength="2" maxlength="32">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Фамилия</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Введите фамилию" required minlength="2" maxlength="32">
+        </div>
+        <div class="form-group">
+            <label for="username">Электронная почта</label>
+            <input type="email" id="username" name="username" placeholder="Введите email" required maxlength="256">
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Введите пароль" required maxlength="256">
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Подтвердите пароль</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Подтвердите пароль" required maxlength="256">
+        </div>
+        <button type="submit">Зарегистрироваться</button>
+        <p th:if="${param.error}" class="error">Ошибка регистрации. Email уже занят или данные неверны.</p>
+        <p id="client-error" class="error" style="display: none;"></p>
+    </form>
+    <div class="login-link">
+        <p>Уже есть аккаунт? <a th:href="@{/login}">Войти</a></p>
+    </div>
+</div>
+
+<script>
+    function validateForm() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorElement = document.getElementById('client-error');
+
+        if (password !== confirmPassword) {
+            errorElement.textContent = 'Пароли не совпадают';
+            errorElement.style.display = 'block';
+            return false;
+        }
+        errorElement.style.display = 'none';
+        return true;
+    }
+</script>
+</body>
+</html>

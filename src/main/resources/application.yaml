@@ -8,3 +8,8 @@ spring:
     url: jdbc:postgresql://localhost:5433/task_manager
     username: postgres
     password: pass
+
+jwt:
+  accessTokenExpiration: 900000  #15 минут
+  refreshTokenExpiration: 604800000  #7 дней
+  secret: snksiwijhwjwouwwwowiwoiwuwuakjwwjauqo

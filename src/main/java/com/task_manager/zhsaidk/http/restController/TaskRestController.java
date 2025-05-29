@@ -24,6 +24,12 @@ public class TaskRestController {
         return ResponseEntity.ok(taskService.getAll(page, size, status));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(taskService.findById(id));
+    }
+
+
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody CreateUpdateTaskRequest request){
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(request));
